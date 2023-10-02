@@ -1,0 +1,6 @@
+token.txt
+obj/
+bin/
+database.db
+.DS_Store
+.vscode/launch.json

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Uat6LxZMg6KIA/juxoC9oQ6BFtj5FdRfYfu3t41zlZpz13QfYPUoAnQghWPxyV3DmA8Jp+ETZ1h2/ElgPvy5nw==",
+  "success": true,
+  "projectFilePath": "/Users/user/Documents/GitHub/reaction-roles-bot-cs/reaction-roles-bot-cs.csproj",
+  "expectedPackageFiles": [
+    "/Users/user/.nuget/packages/microsoft.netcore.app.ref/6.0.22/microsoft.netcore.app.ref.6.0.22.nupkg.sha512",
+    "/Users/user/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.22/microsoft.aspnetcore.app.ref.6.0.22.nupkg.sha512",
+    "/Users/user/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.22/microsoft.netcore.app.host.osx-arm64.6.0.22.nupkg.sha512"
+  ],
+  "logs": []
+}

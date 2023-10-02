@@ -103,5 +103,47 @@ namespace ReactionRolesBotCS {
             await ctx.CreateResponseAsync(responseBuilder);
             return;
         }
+    
+        //
+        // Remove rero command
+        [SlashCommand("remove", "Removes specified reaction role from message")]
+        public async Task removeReroCommand(InteractionContext ctx,
+        [Option("message", "Message ID of the target message")] string message,
+        [Option("emoji", "Target Emoji")] string emoji) {
+            
+            //
+            // Validate Permissions
+
+            if (!ctx.Member.Permissions.HasPermission(Permissions.ManageRoles)) {
+
+                DiscordInteractionResponseBuilder responseBuilder1 = new DiscordInteractionResponseBuilder();
+                responseBuilder1.WithContent("You need manage roles permissions to use this command");
+                responseBuilder1.AsEphemeral();
+                await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, responseBuilder1);
+                return;
+            }
+
+            //
+            // Write changes to database
+
+            try {
+                using (var connection = new SqliteConnection("Data Source=database.db")) {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = @"DELETE FROM reactionRoles WHERE message = $message AND emoji = $emoji;";
+                    command.Parameters.AddWithValue("$message", ulong.Parse(message));
+                    command.Parameters.AddWithValue("$emoji", emoji);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
+
+            DiscordInteractionResponseBuilder responseBuilder2 = new DiscordInteractionResponseBuilder();
+            responseBuilder2.WithContent("Reaction role removed (if it existed). Reactions will have to be removed manually due to technical limitations.");
+            responseBuilder2.AsEphemeral();
+            await ctx.CreateResponseAsync(responseBuilder2);
+        }
     }
 }

@@ -38,6 +38,8 @@ namespace ReactionRolesBotCS {
             //
             // Bind Event Handlers
 
+            discordClient.MessageReactionAdded += ReactionRoleHandler.ReactionEventHandler;
+
             //
             // Launch Client
             

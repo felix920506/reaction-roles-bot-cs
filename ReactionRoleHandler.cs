@@ -50,7 +50,6 @@ public class ReactionRoleHandler
 
 		if (roleId == 0)
 		{
-			Console.WriteLine("test");
 			return;
 		}
 

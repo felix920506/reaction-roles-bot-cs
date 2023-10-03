@@ -1,6 +1,14 @@
 # reaction-roles-bot-cs
  rewrite of [reaction-roles-bot](https://github.com/felix920506/reaction-roles-bot) in C# because [Venson](https://github.com/JPVenson) hates python and I got bullied
 
+ This is my first C# project.
+
+## Dependencies
+
+- [DSharpPlus](https://www.nuget.org/packages/DSharpPlus/5.0.0-nightly-01796)
+- [DSharpPlus.SlashCommands](https://www.nuget.org/packages/DSharpPlus.SlashCommands/5.0.0-nightly-01796)
+- [Microsoft.Data.Sqlite](https://www.nuget.org/packages/Microsoft.Data.Sqlite)
+
 ## How to use
 1. Setup all requirements
 2. Provide token in token.txt

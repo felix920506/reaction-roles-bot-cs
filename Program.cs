@@ -2,49 +2,53 @@
 using DSharpPlus.SlashCommands;
 using Microsoft.Data.Sqlite;
 
-namespace ReactionRolesBotCS {
-    class Program {
-        static async Task Main(string[] args) {
+namespace ReactionRolesBotCS;
 
-            //
-            // Initialize Database
+internal class Program
+{
+	private static async Task Main(string[] args)
+	{
+		//
+		// Initialize Database
 
-            using (var Connection = new SqliteConnection("Data Source=database.db")) {
-                Connection.Open();
-                var command = Connection.CreateCommand();
-                command.CommandText = @"CREATE TABLE IF NOT EXISTS `reactionRoles` ( `message` INTEGER NOT NULL, `emoji` TEXT NOT NULL, `role` INTEGER NOT NULL );";
-                command.ExecuteNonQuery();
-            }
+		await using (var connection = new SqliteConnection("Data Source=database.db"))
+		{
+			connection.Open();
+			var command = connection.CreateCommand();
+			command.CommandText =
+				@"CREATE TABLE IF NOT EXISTS `reactionRoles` ( `message` INTEGER NOT NULL, `emoji` TEXT NOT NULL, `role` INTEGER NOT NULL );";
+			command.ExecuteNonQuery();
+		}
 
-            //
-            // Setup Client
+		//
+		// Setup Client
 
-            string Token = File.ReadAllText("token.txt");
+		var token = await File.ReadAllTextAsync("token.txt");
 
-            DiscordConfiguration ClientConfig = new DiscordConfiguration() {
-                Token = Token,
-                TokenType = TokenType.Bot,
-                Intents = DiscordIntents.GuildMessageReactions |
-                DiscordIntents.AllUnprivileged
-            };
+		var clientConfig = new DiscordConfiguration
+		{
+			Token = token,
+			TokenType = TokenType.Bot,
+			Intents = DiscordIntents.GuildMessageReactions |
+			          DiscordIntents.AllUnprivileged
+		};
 
-            DiscordClient discordClient = new DiscordClient(ClientConfig);
+		var discordClient = new DiscordClient(clientConfig);
 
-            //
-            // Register Slash Commands
+		//
+		// Register Slash Commands
 
-            discordClient.UseSlashCommands().RegisterCommands<ReroSlashCommands>();
+		discordClient.UseSlashCommands().RegisterCommands<ReroSlashCommands>();
 
-            //
-            // Bind Event Handlers
+		//
+		// Bind Event Handlers
 
-            discordClient.MessageReactionAdded += ReactionRoleHandler.ReactionEventHandler;
+		discordClient.MessageReactionAdded += ReactionRoleHandler.ReactionEventHandler;
 
-            //
-            // Launch Client
-            
-            await discordClient.ConnectAsync();
-            await Task.Delay(-1);
-        }
-    }
+		//
+		// Launch Client
+
+		await discordClient.ConnectAsync();
+		await Task.Delay(-1);
+	}
 }
